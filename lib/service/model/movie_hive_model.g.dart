@@ -8,7 +8,7 @@ part of 'movie_hive_model.dart';
 
 class MovieHiveAdapter extends TypeAdapter<MovieHive> {
   @override
-  final int typeId = 0;
+  final int typeId = 2;
 
   @override
   MovieHive read(BinaryReader reader) {
@@ -26,14 +26,13 @@ class MovieHiveAdapter extends TypeAdapter<MovieHive> {
       genre: fields[6] as String,
       releaseDate: fields[7] as DateTime,
       runtime: fields[8] as int,
-      castList: (fields[9] as List).cast<Cast>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, MovieHive obj) {
     writer
-      ..writeByte(10)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -51,9 +50,7 @@ class MovieHiveAdapter extends TypeAdapter<MovieHive> {
       ..writeByte(7)
       ..write(obj.releaseDate)
       ..writeByte(8)
-      ..write(obj.runtime)
-      ..writeByte(9)
-      ..write(obj.castList);
+      ..write(obj.runtime);
   }
 
   @override

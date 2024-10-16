@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive/hive.dart';
+import 'package:movieapp/service/model/movie_hive_model.dart';
 import 'package:movieapp/service/model/movie_model.dart';
 
 class MovieDetail extends StatelessWidget {
@@ -9,9 +10,25 @@ class MovieDetail extends StatelessWidget {
   const MovieDetail({super.key, required this.movie});
 
   Future<void> saveMovieToFavorites() async {
-    var box = await Hive.openBox<Movie>('favorites');
-    await box.add(movie);
-  } // modeli kaydetcen 
+    var box = Hive.isBoxOpen('favorites')
+        ? Hive.box<MovieHive>('favorites')
+        : await Hive.openBox<MovieHive>('favorites');
+
+    final movieHive = MovieHive(
+      id: movie.id,
+      title: movie.title,
+      posterPath: movie.posterPath,
+      backdropPath: movie.backdropPath,
+      overview: movie.overview,
+      voteAverage: movie.voteAverage,
+      genre: movie.genre,
+      releaseDate: movie.releaseDate,
+      runtime: movie.runtime,
+    );
+
+    await box.add(movieHive);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -141,8 +158,7 @@ class MovieDetail extends StatelessWidget {
               ),
               SizedBox(height: 8.h),
               SizedBox(
-                height:
-                    150.h, 
+                height: 150.h,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: movie.castList.length,
@@ -195,7 +211,7 @@ class MovieDetail extends StatelessWidget {
           ),
         ),
       ),
-      backgroundColor: const Color(0xFF1A1A1A), 
+      backgroundColor: const Color(0xFF1A1A1A),
     );
   }
 }

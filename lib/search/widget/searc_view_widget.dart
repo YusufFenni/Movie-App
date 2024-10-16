@@ -4,8 +4,8 @@ import 'package:movieapp/constant/constants.dart';
 import 'package:movieapp/home/model/home_view_model.dart';
 import 'package:movieapp/search/widget/movie_search_result_list.dart';
 
-class SearchPageWidget extends StatelessWidget {
-  const SearchPageWidget({
+class SearchViewWidget extends StatelessWidget {
+  const SearchViewWidget({
     super.key,
     required this.homeViewModel,
   });
@@ -28,13 +28,13 @@ class SearchPageWidget extends StatelessWidget {
             ),
             prefixIcon: const Icon(Icons.search, color: Colors.grey),
           ),
-          onSubmitted: (query) {
+          onChanged: (query) {
             if (query.isNotEmpty) {
               homeViewModel.searchMovies(query);
             }
           },
         ),
-       16.verticalSpace,
+        16.verticalSpace,
         homeViewModel.isLoading
             ? const CircularProgressIndicator()
             : homeViewModel.filteredMovies.isEmpty
@@ -52,4 +52,3 @@ class SearchPageWidget extends StatelessWidget {
     );
   }
 }
-

@@ -24,7 +24,7 @@ class SearchView extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: SearchPageWidget(homeViewModel: homeViewModel),
+        child: SearchViewWidget(homeViewModel: homeViewModel),
       ),
     );
   }

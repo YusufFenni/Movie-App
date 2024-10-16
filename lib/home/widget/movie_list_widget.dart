@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movieapp/home/model/home_view_model.dart';
-import 'package:movieapp/moviedetail/view/movie_detail.dart';
 import 'package:provider/provider.dart';
 
-class MovieListView extends StatelessWidget {
-  const MovieListView({super.key});
+class MovieListWidget extends StatelessWidget {
+  const MovieListWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +29,10 @@ class MovieListView extends StatelessWidget {
           final movie = homeViewModel.currentMovies[index];
           return InkWell(
             onTap: () {
-              Navigator.push(
+             Navigator.pushNamed(
                 context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      MovieDetail(movie: movie), // Detay sayfasına yönlendir
-                ),
+                '/movieDetail',
+                arguments: movie,
               );
             },
             child: Stack(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movieapp/constant/constants.dart';
-import 'package:movieapp/search/view/search_view.dart';
 
 class SearchWidget extends StatelessWidget {
   const SearchWidget({
@@ -13,10 +12,7 @@ class SearchWidget extends StatelessWidget {
     return Center(
       child: GestureDetector(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const SearchView()),
-          );
+          Navigator.pushNamed(context, '/search');
         },
         child: Container(
           width: 326.w,

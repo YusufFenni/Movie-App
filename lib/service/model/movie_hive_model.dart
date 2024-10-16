@@ -4,7 +4,7 @@ import 'cast_model.dart';
 
 part 'movie_hive_model.g.dart'; // Hive için gerekli adapter dosyası
 
-@HiveType(typeId: 0) // typeId benzersiz olmalı
+@HiveType(typeId: 2) // typeId benzersiz olmalı
 class MovieHive {
   @HiveField(0)
   final int id;
@@ -33,9 +33,7 @@ class MovieHive {
   @HiveField(8)
   final int runtime;
 
-  @HiveField(9)
-  final List<Cast>
-      castList; // Oyuncu listesi (Cast için de TypeAdapter gerekir)
+  // Oyuncu listesi (Cast için de TypeAdapter gerekir)
 
   MovieHive({
     required this.id,
@@ -47,7 +45,6 @@ class MovieHive {
     required this.genre,
     required this.releaseDate,
     required this.runtime,
-    required this.castList,
   });
 
   factory MovieHive.fromJson(Map<String, dynamic> json, List<Cast> castList) {
@@ -63,7 +60,6 @@ class MovieHive {
           : 'Unknown',
       releaseDate: DateTime.parse(json['release_date'] ?? '2000-01-01'),
       runtime: json['runtime'] ?? 0,
-      castList: castList,
     );
   }
 }

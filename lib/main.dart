@@ -5,15 +5,18 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:movieapp/constant/constants.dart';
 import 'package:movieapp/home/model/home_view_model.dart';
 import 'package:movieapp/home/view/home_view.dart';
-import 'package:movieapp/service/model/cast_hive_model.dart';
+import 'package:movieapp/favorite/view/favorite_movie_page.dart';
+import 'package:movieapp/moviedetail/view/movie_detail.dart';
+import 'package:movieapp/search/view/search_view.dart';
 import 'package:movieapp/service/model/movie_hive_model.dart';
+import 'package:movieapp/service/model/movie_model.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   await dotenv.load();
   await Hive.initFlutter();
-  Hive.registerAdapter(MovieHiveAdapter()); 
-  Hive.registerAdapter(CastHiveAdapter());
+  Hive.registerAdapter(MovieHiveAdapter());
+  await Hive.openBox<MovieHive>('favorites');
   runApp(const MainApp());
 }
 
@@ -37,7 +40,21 @@ class MainApp extends StatelessWidget {
               primaryColor: ColorConstants.backGround,
               scaffoldBackgroundColor: ColorConstants.backGround,
             ),
-            home: const HomeView(),
+            initialRoute: '/',
+            routes: {
+              '/': (context) => const HomeView(),
+              '/favorites': (context) => const FavoriteMoviesPage(),
+              '/search': (context) => const SearchView(),
+            },
+            onGenerateRoute: (settings) {
+              if (settings.name == '/movieDetail') {
+                final movie = settings.arguments as Movie;
+                return MaterialPageRoute(
+                  builder: (context) => MovieDetail(movie: movie),
+                );
+              }
+              return null;
+            },
           );
         },
       ),
